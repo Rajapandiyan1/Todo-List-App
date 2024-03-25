@@ -1,15 +1,15 @@
 "use client"
 import Link from 'next/link'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 function page() {
+  let router=useRouter();
     let [data,setdata]=useState({name:'',email:'',password:'',cpassword:''});
     let [error,seterr]=useState({name:false,email:false,password:false,cpassword:false,gmail:false,passSame:false});
     let [response,setResponse]=useState({response:'',statusCode:0})
     let [token,settoken]=useState('');
     let [load,setLoad]=useState(false);
- let router=useRouter();
     async function createUser(newdata) {
       let copy={...newdata}
       delete copy.cpassword;
@@ -77,7 +77,14 @@ function page() {
 setResponse({statusCode:0,response:''})
     },3000)
     setdata({name:'',email:'',password:'',cpassword:''});
-    console.log(token)
+    settoken((token)=>{
+      if(token!=''){
+        localStorage.setItem('token',token)
+        router.push('/Dashboard')
+      }
+
+      return token;
+    })
     }
 
   return (
