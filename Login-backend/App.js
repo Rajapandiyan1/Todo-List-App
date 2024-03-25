@@ -22,8 +22,16 @@ App.post("/newUser",async (req,res,next)=>{
         res.send(e);
     }
 })
-App.post("/login",(req,res,next)=>{
-    res.send("login success")
+App.post("/login",async (req,res,next)=>{
+    console.log(req.body);
+    let verify=await RegisterModel.findOne({email:req.body.email});
+    console.log(verify)
+    if(verify == null){
+        res.status(400).send({response:"Check your email and password",statusCode:400})
+        // res.send({response:"Check your email and password",statusCode:400})
+    }else{
+        res.send({response:"Login success",statusCode:200})
+    }
 })
 App.listen(3001,()=>{
     console.log("Server is Starting ...")

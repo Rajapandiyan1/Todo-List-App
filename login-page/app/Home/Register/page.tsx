@@ -21,15 +21,12 @@ function page() {
       }).then((data)=>{
         return data.json()
       }).then((data)=>{
-        console.log(data)
         return data;
       }).catch((e)=>{
-        console.log(e.message)
       }).finally(()=>{
         setLoad(false)
       })
       setResponse(response)
-      console.log("res",response)
       return response;
     }
     function validation() {
@@ -66,35 +63,33 @@ function page() {
       e.preventDefault()
     let err=validation();
       seterr(err);
-      console.log("password",data.cpassword==data.password)
-      console.log(data.cpassword,data.password)
      let isValid= TotalValid(err);
      if(isValid){
  let response= await createUser(data)
- console.log(response)
      }
     //  alert("sd")
     setLoad(false);
     setTimeout(()=>{
 setResponse({statusCode:0,response:''})
     },3000)
+    setdata({name:'',email:'',password:'',cpassword:''});
     }
 
   return (
     <div className="container">
     <form className="form">
         <h2>Register</h2>
-        <input type="text" onChange={(e)=>{setdata((prev)=>{return {...prev,name:e.target.value}})}} placeholder="Username" required/>
+        <input type="text" value={data.name} onChange={(e)=>{setdata((prev)=>{return {...prev,name:e.target.value}})}} placeholder="Username" required/>
         {error.name && <label className='text-danger mb-2'>Name is Required</label>}
-        <input type="email" onChange={(e)=>{setdata((prev)=>{return {...prev,email:e.target.value}})}} placeholder="Email" required/>
+        <input type="email" value={data.email} onChange={(e)=>{setdata((prev)=>{return {...prev,email:e.target.value}})}} placeholder="Email" required/>
         {error.email && <label className='text-danger mb-2'>Email is Required</label>}
         {error.gmail && !error.email &&<label className='text-danger mb-2'>Email is Required to @gmail.com</label>}
 
 
-        <input type="password" onChange={(e)=>{setdata((prev)=>{return {...prev,password:e.target.value}})}} placeholder="Password" required/>
+        <input type="password" value={data.password} onChange={(e)=>{setdata((prev)=>{return {...prev,password:e.target.value}})}} placeholder="Password" required/>
         {error.password && <label className='text-danger mb-2'>Password is Required</label>}
 
-        <input type="password" onChange={(e)=>{setdata((prev)=>{return {...prev,cpassword:e.target.value}})}} placeholder="Confirm Password" required/>
+        <input type="password" value={data.cpassword} onChange={(e)=>{setdata((prev)=>{return {...prev,cpassword:e.target.value}})}} placeholder="Confirm Password" required/>
         {error.cpassword && <label className='text-danger mb-2'>Confirm Password is Required</label>}
         {error.passSame && !error.cpassword && !error.password &&<label className='text-danger mb-2'>Confirm Password is not same in password</label>}
 
