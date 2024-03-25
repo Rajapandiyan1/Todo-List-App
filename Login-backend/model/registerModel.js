@@ -14,10 +14,33 @@ let RegisterSchema=new mongoose.Schema({
         type:String,
         required:[true,"Password is Required"],
         min:[7,"Password minimum length is 8"]
-    },createdAt: {
+    },
+    user_id:{
+type:mongoose.Types.ObjectId,
+ref:'user'
+    }
+    ,createdAt: {
         type: Date,
         default: Date.now
     }
 });
+RegisterSchema.pre("save",async function(next){
+    let copy={name:this.name,email:this.email}
+    try{
+    let userModel=await mongoose.model("user",{
+           name:String,
+        email:String
+             })
+             let userData=new userModel(copy);
+           let user=  await userData.save();
+           this.user_id=user._id;}
+
+           catch(e){
+            console.log(e)
+           }finally{
+            
+           }
+next();
+})
 let RegisterModel=mongoose.model("Register",RegisterSchema);
 module.exports=RegisterModel

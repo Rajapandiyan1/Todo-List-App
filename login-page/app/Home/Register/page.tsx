@@ -1,13 +1,15 @@
 "use client"
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 
 function page() {
     let [data,setdata]=useState({name:'',email:'',password:'',cpassword:''});
     let [error,seterr]=useState({name:false,email:false,password:false,cpassword:false,gmail:false,passSame:false});
     let [response,setResponse]=useState({response:'',statusCode:0})
+    let [token,settoken]=useState('');
     let [load,setLoad]=useState(false);
-
+ let router=useRouter();
     async function createUser(newdata) {
       let copy={...newdata}
       delete copy.cpassword;
@@ -21,12 +23,14 @@ function page() {
       }).then((data)=>{
         return data.json()
       }).then((data)=>{
+        settoken(data.token);
         return data;
       }).catch((e)=>{
       }).finally(()=>{
         setLoad(false)
       })
       setResponse(response)
+
       return response;
     }
     function validation() {
@@ -73,6 +77,7 @@ function page() {
 setResponse({statusCode:0,response:''})
     },3000)
     setdata({name:'',email:'',password:'',cpassword:''});
+    console.log(token)
     }
 
   return (
