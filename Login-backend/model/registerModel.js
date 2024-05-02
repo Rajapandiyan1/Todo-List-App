@@ -24,16 +24,19 @@ ref:'user'
         default: Date.now
     }
 });
+let UserSchema=new mongoose.Schema({
+    name:String,
+    email:String,
+});
+let UserModel=mongoose.model("user",UserSchema);
 RegisterSchema.pre("save",async function(next){
     let copy={name:this.name,email:this.email}
     try{
-    let userModel=await mongoose.model("user",{
-           name:String,
-        email:String
-             })
-             let userData=new userModel(copy);
+    
+             let userData=new UserModel(copy);
            let user=  await userData.save();
-           this.user_id=user._id;}
+           this.user_id=user._id;
+        }
 
            catch(e){
             console.log(e)
@@ -43,4 +46,4 @@ RegisterSchema.pre("save",async function(next){
 next();
 })
 let RegisterModel=mongoose.model("Register",RegisterSchema);
-module.exports=RegisterModel
+module.exports={RegisterModel,UserModel}
