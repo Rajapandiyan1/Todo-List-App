@@ -9,7 +9,7 @@ let Logs=function Log() {
         if(localStorage.getItem("Token")){
             localStorage.removeItem("Token")
         }
-        route.push("/")
+        route.push("/Register")
     }
   return (
     <button className='btn btn-primary btn-sm' onClick={()=>{logouts()}}>Logout</button>

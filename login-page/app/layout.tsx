@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // import {Logouts} from '../Components/Logout'
 import Logs from '../Components/Log'
 import Link from "next/link";
+import RouteAthu from "@/Components/RouteAthu";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <RouteAthu/>
         <div className="container-fluid">
 <header className="row">
   <div className="col-12">
@@ -37,9 +39,9 @@ export default function RootLayout({
         <li className="nav-item">
           <Link className="nav-link" href="/Login">Login</Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" href="/Dashboard">Dashboard</Link>
-        </li>
+        </li> */}
         <li className="nav-item">
 {/* <Logouts/> */}
 <Logs/>

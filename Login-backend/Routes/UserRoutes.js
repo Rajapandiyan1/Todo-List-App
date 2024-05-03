@@ -4,6 +4,12 @@ const bycrypt=require("bcrypt")
 const { userModel ,userDataModel} = require('../Model/UserModel');
 const Route = require('express').Router()
 
+Route.get("/verify",verifyToken,async(req,res,next)=>{
+    res.send({
+        verify:true
+    })
+    next()
+})
 Route.put("/update/:id",verifyToken,async (req,res,next)=>{
     let {id}=req.params;
     let body=req.body;
